@@ -1,8 +1,8 @@
-[简体中文README](https://github.com/tencent-wechat/phxpaxos/blob/master/README.zh_CN.md)
+[简体中文README](https://github.com/Tencent/phxpaxos/blob/master/README.zh_CN.md)
 
-**PhxPaxos is a state-synchronization lib based on Paxos protocol, it is totally designed by Wechat independently. It can help your services in synchronizating the state from a single node to another nodes to make services into a multi-copy cluster and fail-over handing automatically by calling functions in our lib.**
+**PhxPaxos is a state-synchronization lib based on Paxos protocol, it is totally designed by Wechat independently. It can help your services in synchronizing the state from a single node to the other nodes to form a multi-copy cluster and handling fail-over automatically by calling functions in our lib.**
 
-**This lib has been used in Wechat production environment, we also test it in a large number of harsh environments to guarantee a stable consistency.**
+**This lib has been used in Wechat production environment, we have also tested it in a large number of harsh environments to guarantee a stable consistency.**
 
 Authors: Haochuan Cui, Ming Chen, Junchao Chen and Duokai Huang 
 
@@ -10,7 +10,7 @@ Contact us: phxteam@tencent.com
 
 [Principle details(Chinese)](http://mp.weixin.qq.com/s?__biz=MzI4NDMyNTU2Mw==&mid=2247483695&idx=1&sn=91ea422913fc62579e020e941d1d059e#rd)
 
-PhxPaxos [![Build Status](https://travis-ci.org/tencent-wechat/phxpaxos.png)](https://travis-ci.org/tencent-wechat/phxpaxos)
+PhxPaxos [![Build Status](https://travis-ci.org/Tencent/phxpaxos.png)](https://travis-ci.org/Tencent/phxpaxos)
 
 # Features
   * Purely based on [Paxos Made Simple](http://research.microsoft.com/en-us/um/people/lamport/pubs/paxos-simple.pdf) by Lamport. 
@@ -46,16 +46,19 @@ PhxPaxos [![Build Status](https://travis-ci.org/tencent-wechat/phxpaxos.png)](ht
     Parallel client: 100 Threads
     
 ### Performance Test Result(QPS)
+> Request latency small than 10ms.
 ###### Data set with small size(100B)
-    1 instance: 1171
-    20 instances: 11931
-    50 instances: 13424
-    100 instances: 13962
+    1 Group: 1171
+    20 Groups: 11931
+    50 Groups: 13424
+    100 Groups: 13962
 ###### Data set with larse size(100KB)
-    1 instance: 280
-    20 instances: 984
-    50 instances: 1054
-    100 instances: 1067
+    1 Group: 280
+    20 Groups: 984
+    50 Groups: 1054
+    100 Groups: 1067
+###### BatchPropose(2KB)
+    100 Groups: 150000
 
 # Code Directory Introduction
 **include:** This directory includes all head files while using PhxPaxos. You may make some mistakes if you don't understand all the functions in this directory completely.
@@ -80,7 +83,7 @@ PhxPaxos [![Build Status](https://travis-ci.org/tencent-wechat/phxpaxos.png)](ht
  * **include/network.h** Abstract function of Network Module. You can use your own network protocol by overloading these functions.
  * **include/storage.h** Abstract function of Storage Module.
  * **include/log.h** Abstract function of Logging Module.
- * **include/breakpoint.h** Abstract function of breaking points, add your ownMonitor Module here to monitor these break pints. 
+ * **include/breakpoint.h** Abstract function of breaking points, add your ownMonitor Module here to monitor these break points. 
  
 # How to Compile
 ### Third party libs preparation

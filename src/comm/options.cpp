@@ -114,15 +114,18 @@ Options :: Options()
     iSyncInterval = 0;
     poNetWork = nullptr;
     iUDPMaxSize = 4096;
+    iIOThreadCount = 1;
     iGroupCount = 1;
     bUseMembership = false;
     pMembershipChangeCallback = nullptr;
+    pMasterChangeCallback = nullptr;
     poBreakpoint = nullptr;
     bIsLargeValueMode = false;
     pLogFunc = nullptr;
     eLogLevel = LogLevel::LogLevel_None;
     bUseCheckpointReplayer = false;
     bUseBatchPropose = false;
+    bOpenChangeValueBeforePropose = false;
 }
     
 }

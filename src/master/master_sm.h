@@ -42,7 +42,11 @@ enum MasterOperatorType
 class MasterStateMachine : public InsideSM 
 {
 public:
-    MasterStateMachine(const LogStorage * poLogStorage, const nodeid_t iMyNodeID, const int iGroupIdx);
+    MasterStateMachine(
+        const LogStorage * poLogStorage, 
+        const nodeid_t iMyNodeID, 
+        const int iGroupIdx,
+        MasterChangeCallback pMasterChangeCallback);
     ~MasterStateMachine();
 
     bool Execute(const int iGroupIdx, const uint64_t llInstanceID, const std::string & sValue, SMCtx * poSMCtx);
@@ -59,6 +63,10 @@ public:
     {
         return m_llMasterVersion;
     }
+
+    void BeforePropose(const int iGroupIdx, std::string & sValue);
+
+    const bool NeedCallBeforePropose();
 
 public:
     int GetCheckpointState(const int iGroupIdx, std::string & sDirPath, 
@@ -127,6 +135,8 @@ private:
     uint64_t m_llAbsExpireTime;
 
     std::mutex m_oMutex;
+
+    MasterChangeCallback m_pMasterChangeCallback;
 };
     
 }

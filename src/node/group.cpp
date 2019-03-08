@@ -34,7 +34,7 @@ Group :: Group(LogStorage * poLogStorage,
     m_oConfig(poLogStorage, oOptions.bSync, oOptions.iSyncInterval, oOptions.bUseMembership, 
             oOptions.oMyNode, oOptions.vecNodeInfoList, oOptions.vecFollowerNodeInfoList, 
             iGroupIdx, oOptions.iGroupCount, oOptions.pMembershipChangeCallback),
-    m_oInstance(&m_oConfig, poLogStorage, &m_oCommunicate, oOptions.bUseCheckpointReplayer),
+    m_oInstance(&m_oConfig, poLogStorage, &m_oCommunicate, oOptions),
     m_iInitRet(-1), m_poThread(nullptr)
 {
     m_oConfig.SetMasterSM(poMasterSM);
@@ -76,6 +76,11 @@ int Group :: GetInitRet()
 void Group :: Start()
 {
     m_oInstance.Start();
+}
+
+void Group :: Stop()
+{
+    m_oInstance.Stop();
 }
 
 Config * Group :: GetConfig()

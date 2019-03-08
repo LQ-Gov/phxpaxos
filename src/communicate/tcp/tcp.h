@@ -29,13 +29,33 @@ See the AUTHORS file for names of contributors.
 namespace phxpaxos
 {
 
-class TcpIOThread : public Thread
+class TcpRead : public Thread
 {
 public:
-    TcpIOThread(NetWork * poNetWork);
-    ~TcpIOThread();
+    TcpRead(NetWork * poNetWork);
+    ~TcpRead();
 
-    int Init(const std::string & sListenIp, const int iListenPort);
+    int Init();
+
+    void run();
+
+    void Stop();
+
+    EventLoop * GetEventLoop();
+
+private:
+    EventLoop m_oEventLoop;
+};
+
+/////////////////////////////////////////////
+
+class TcpWrite : public Thread
+{
+public:
+    TcpWrite(NetWork * poNetWork);
+    ~TcpWrite();
+
+    int Init();
 
     void run();
 
@@ -44,10 +64,29 @@ public:
     int AddMessage(const std::string & sIP, const int iPort, const std::string & sMessage);
 
 private:
-    TcpAcceptor m_oTcpAcceptor;
     TcpClient m_oTcpClient;
     EventLoop m_oEventLoop;
+};
 
+class TcpIOThread 
+{
+public:
+    TcpIOThread(NetWork * poNetWork);
+    ~TcpIOThread();
+
+    int Init(const std::string & sListenIp, const int iListenPort, const int iIOThreadCount);
+
+    void Start();
+
+    void Stop();
+
+    int AddMessage(const int iGroupIdx, const std::string & sIP, const int iPort, const std::string & sMessage);
+
+private:
+    NetWork * m_poNetWork;
+    TcpAcceptor m_oTcpAcceptor;
+    std::vector<TcpRead *> m_vecTcpRead;
+    std::vector<TcpWrite *> m_vecTcpWrite;
     bool m_bIsStarted;
 };
     
